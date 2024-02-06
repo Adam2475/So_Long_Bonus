@@ -6,7 +6,7 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:48:32 by adapassa          #+#    #+#             */
-/*   Updated: 2024/02/06 19:38:12 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/02/06 21:46:04 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,13 @@ int main(int ac, char **av)
 
     void	*mlx;
 	void	*mlx_win;
-	t_data	img;
-	int i = 0;
-	int y = 100;
+	//t_data	img;
+	void *img;
+	char *relative_path = "./dbz.XPM";
+	//int i = 0;
+	//int y = 100;
+	int	img_width = 50;
+	int	img_height = 50;
 
 	/*
 	Calculate the memory offset: Before writing a pixel, 
@@ -71,6 +75,7 @@ int main(int ac, char **av)
     mlx = mlx_init();
 	//img.img = mlx_new_image(mlx, 1920, 1080);
 	mlx_win = mlx_new_window(mlx, 1920, 1080, "Hello world!");
+	img = mlx_xpm_file_to_image(mlx, relative_path, &img_width, &img_height);
 
 	//Understand that mlx_pixel_put is slow:
 	//Direct pixel manipulation with mlx_pixel_put 
@@ -85,26 +90,29 @@ int main(int ac, char **av)
 	*/
 
 	// where to put and size
-	img.img = mlx_new_image(mlx, 1920, 1080);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
-							&img.endian);
+	//img.img = mlx_new_image(mlx, 1920, 1080);
+	//img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length,
+	//						&img.endian);
 
-	while (i < 100)
-	{
-		my_mlx_pixel_put(&img, 5, i, 0x00FF0000);
-		my_mlx_pixel_put(&img, i, 5, 0x00FF0000); // Draws a red pixel at (5,5)
-		my_mlx_pixel_put(&img, 100, i, 0x00FF0000);
-		my_mlx_pixel_put(&img, i, 100, 0x00FF0000);
-		my_mlx_pixel_put(&img, y, i, 0x00FF0000);
-		my_mlx_pixel_put(&img, i, y, 0x00FF0000);
-		i = i + 2;
-		y--;
-	}
+	// while (i < 100)
+	// {
+	// 	my_mlx_pixel_put(&img, 5, i, 0x00FF0000);
+	// 	my_mlx_pixel_put(&img, i, 5, 0x00FF0000); // Draws a red pixel at (5,5)
+	// 	my_mlx_pixel_put(&img, 100, i, 0x00FF0000);
+	// 	my_mlx_pixel_put(&img, i, 100, 0x00FF0000);
+	// 	my_mlx_pixel_put(&img, y, i, 0x00FF0000);
+	// 	my_mlx_pixel_put(&img, i, y, 0x00FF0000);
+	// 	i = i + 2;
+	// 	y--;
+	// }
 
-	draw_circle(&img, 960, 540, 100, 0x00FF0000);
+	//draw_circle(&img, 960, 540, 100, 0x00FF0000);
 
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	
+	//mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
+
+	//img = mlx_xpm_file_to_image(mlx, relative_path, &img_width, &img_height);
+
+	mlx_put_image_to_window(mlx, mlx_win, img, 0, 0);
 	mlx_loop(mlx);
     return (0);
 }
