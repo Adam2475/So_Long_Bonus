@@ -14,8 +14,6 @@ void	render_map(t_vars *vars, char *map, char *relative_path, char *wall_path)
 
 	i = 0;
 	j = 1;
-	x = 0;
-	z = 0;
 	int p = 0;
 	img_ptr = mlx_xpm_file_to_image(vars->mlx, relative_path, &img_width, &img_height);
 	wall_ptr = mlx_xpm_file_to_image(vars->mlx, wall_path, &img_width, &img_height);
@@ -26,14 +24,16 @@ void	render_map(t_vars *vars, char *map, char *relative_path, char *wall_path)
 		i++;
 	}
 	i = i / j;
+	x = 0;
+	z = 0;
 	while (z <= j)
-	{
+	{	
 		while (x <= i)
 		{
 			if (map[p] == '0' || map[p] == 'P')
-				mlx_put_image_to_window(vars->mlx, vars->win, img_ptr, x * TILE_SIZE, z * TILE_SIZE);
+				mlx_put_image_to_window(vars->mlx, vars->win, img_ptr, x * 32, z * 32);
 			else if (map[p] == '1')
-				mlx_put_image_to_window(vars->mlx, vars->win, wall_ptr, x * TILE_SIZE, z * TILE_SIZE);
+				mlx_put_image_to_window(vars->mlx, vars->win, wall_ptr, x * 32, z * 32);
 			x++;
 			p++;
 		}
@@ -54,8 +54,6 @@ void	*render_player(t_vars *vars, char *map, char *path)
 	x = 0;
 	z = 0;
 	i = 0;
-	// ft_printf("%d\n", x);
-	// ft_printf("%d\n", z);
 	while (map[x] != '\n')
 		x++;
 	while (map[i] != 'P')
@@ -67,7 +65,5 @@ void	*render_player(t_vars *vars, char *map, char *path)
 	vars->pos_y = z;
 	vars->pos_x = (i % x) - vars->pos_y;
 	vars->player_image = mlx_xpm_file_to_image(vars->mlx, path, &height, &width);
-	// ft_printf("%d\n", chara->pos_x);
-	// ft_printf("%d\n", chara->pos_y);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->player_image, vars->pos_x * TILE_SIZE,  vars->pos_y * TILE_SIZE);
 }

@@ -1,6 +1,6 @@
 CC = cc
 NAME = so_long.exe
-
+FLAGS =  -g
 SRC = main.c src/commands.c src/parsing.c \
 		src/rendering.c \
 
@@ -13,8 +13,8 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 		@cd libft/ && $(MAKE) && mv $(LIB) ../
-		@$(MAKE) -s -C $(MLX)
-		$(CC) $(OBJ) $(LIB) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME)
+		@$(MAKE) -C $(MLX)
+		$(CC) $(FLAGS) $(SRC) $(LIB) -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME) 
 
 clean:
 		rm -f $(OBJ)
@@ -25,4 +25,4 @@ fclean: clean
 		rm -f $(LIB)
 		rm -f $(NAME)
 
-re: fclean all
+re: fclean  all

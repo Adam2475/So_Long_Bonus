@@ -19,6 +19,8 @@ typedef struct s_vars
 	void	*mlx;
 	void	*win;
 	char	*map;
+	int		map_width;
+	int		map_height;
 	int		pos_x;
 	int		pos_y;
 	void	*player_image;
@@ -29,5 +31,6 @@ int		map_error(char *map);
 char 	*clone_map(char *map);
 void	render_map(t_vars *vars, char *map, char *relative_path, char *wall_path);
 void	*render_player(t_vars *vars, char *map, char *path);
+void	check_movement(int keycode, t_vars *vars);
 
 #endif

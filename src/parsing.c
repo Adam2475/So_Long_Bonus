@@ -5,6 +5,8 @@ char *clone_map(char *map)
 	char *tmp;
 	char *holder;
 	int fd;
+
+	holder = NULL;
 	fd = open(map, O_RDONLY);
 	while (1)
 	{

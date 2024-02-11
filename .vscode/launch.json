@@ -1,0 +1,15 @@
+{
+    "configurations": [
+    {
+        "name": "(gdb) Launch",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "${workspaceFolder}/so_long.exe",
+        "args": ["map.ber"],
+        "stopAtEntry": false,
+        "cwd": "${fileDirname}",
+        "externalConsole": false,
+        "MIMode": "gdb",
+    }
+    ]
+}

@@ -6,7 +6,7 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/22 18:19:19 by adapassa          #+#    #+#             */
-/*   Updated: 2024/02/08 17:55:55 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/02/11 13:54:59 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,7 @@ char	*ft_strjoin_gnl(char const *s1, char const *s2)
 
 	i = 0;
 	j = -1;
-	s3 = (char *)ft_custom_function(sizeof(char),
-			((long)ft_custom_function(0, 0, (char *)s1, 0)
+	s3 = (char *)ft_custom_function(sizeof(char), ((long)ft_custom_function(0, 0, (char *)s1, 0)
 				+ (long)ft_custom_function(0, 0, (char *)s2, 0) + 1), NULL, 1);
 	if (!s3)
 		return (0);
