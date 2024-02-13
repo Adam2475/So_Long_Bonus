@@ -23,6 +23,39 @@ int key_hook(int keycode, t_vars *vars)
 	return (0);
 }
 
+static bool	check_position(t_vars vars, char *map, int position, int direction)
+{
+	if (direction == UP)
+	{
+		if (map[position - vars.map_width] != '1')
+		{
+			return (false);
+		}
+	}
+	else if (direction == DOWN)
+	{
+		if (map[position + vars.map_width] != '1')
+		{
+			return (false);
+		}
+	}
+	else if (direction == LEFT)
+	{
+		if (map[position - 1] != '1')
+		{
+			return (false);
+		}
+	}
+	else if (direction == RIGHT)
+	{
+		if (map[position + 1] != '1')
+		{
+			return (false);
+		}
+	}
+	return (true);
+}
+
 //bool is_valid_movement()
 
 void check_movement(int keycode, t_vars *vars)
@@ -33,22 +66,50 @@ void check_movement(int keycode, t_vars *vars)
 	tmp = vars->pos_x;
 	jmp = vars->pos_x;
 
-
 	if (keycode == ARR_LEFT)
 	{
-		vars->pos_x--;
-		ft_printf("d\n", vars->pos_x);
+		
+		if (check_position(*vars, vars->map, vars->player_i, LEFT) == false)
+		{
+			vars->pos_x--;
+			ft_printf("%d\n", vars->pos_x);
+			vars->player_i = vars->player_i - 1;
+		}
+		else
+			ft_printf("Bang!\n");
 	}
 	if (keycode == ARR_RIGHT)
 	{
-		vars->pos_x++;
+		if (check_position(*vars, vars->map, vars->player_i, RIGHT) == false)
+		{
+			//ft_printf("%d\n", check_position(*vars, vars->map, vars->player_i, RIGHT));
+			vars->pos_x++;
+			ft_printf("%d\n", vars->pos_x);
+			vars->player_i = vars->player_i + 1;
+		}
+		else
+			ft_printf("Bang!\n");
 	}
 	if (keycode == ARR_UP)
 	{
-		vars->pos_y--;
+		if (check_position(*vars, vars->map, vars->player_i, UP) == false)
+		{
+			vars->pos_y--;
+			ft_printf("%d\n", vars->pos_y);
+			vars->player_i = vars->player_i - vars->map_width;
+		}
+		else
+			ft_printf("Bang!\n");
 	}
 	if (keycode == ARR_DOWN)
 	{
-		vars->pos_y++;
+		if (check_position(*vars, vars->map, vars->player_i, DOWN) == false)
+		{
+			vars->pos_y++;
+			ft_printf("%d\n", vars->pos_y);
+			vars->player_i = vars->player_i + vars->map_width;
+		}
+		else
+			ft_printf("Bang!\n");
 	}
 }

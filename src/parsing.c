@@ -4,6 +4,7 @@ char *clone_map(char *map)
 {
 	char *tmp;
 	char *holder;
+	//char map[][];
 	int fd;
 
 	holder = NULL;

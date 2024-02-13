@@ -14,6 +14,13 @@
 # define ARR_UP 65362
 # define ARR_DOWN 65364
 
+enum Direction {
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT
+};
+
 typedef struct s_vars
 {
 	void	*mlx;
@@ -21,6 +28,7 @@ typedef struct s_vars
 	char	*map;
 	int		map_width;
 	int		map_height;
+	int		player_i;
 	int		pos_x;
 	int		pos_y;
 	void	*player_image;

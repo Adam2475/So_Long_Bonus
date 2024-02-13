@@ -8,9 +8,9 @@ void	render_map(t_vars *vars, char *map, char *relative_path, char *wall_path)
 	int z;
 	int x;
 	void *img_ptr;
+	void *wall_ptr;
 	int img_width = 32;
 	int img_height = 32;
-	void *wall_ptr;
 
 	i = 0;
 	j = 1;
@@ -26,6 +26,8 @@ void	render_map(t_vars *vars, char *map, char *relative_path, char *wall_path)
 	i = i / j;
 	x = 0;
 	z = 0;
+	vars->map_width = i;
+	vars->map_height = j;
 	while (z <= j)
 	{	
 		while (x <= i)
@@ -62,6 +64,7 @@ void	*render_player(t_vars *vars, char *map, char *path)
 			z++;
 		i++;
 	}
+	vars->player_i = i;
 	vars->pos_y = z;
 	vars->pos_x = (i % x) - vars->pos_y;
 	vars->player_image = mlx_xpm_file_to_image(vars->mlx, path, &height, &width);
