@@ -4,7 +4,6 @@ char *clone_map(char *map)
 {
 	char *tmp;
 	char *holder;
-	//char map[][];
 	int fd;
 
 	holder = NULL;
@@ -21,15 +20,18 @@ char *clone_map(char *map)
 	return (holder);
 }
 
-int	map_error(char *map)
+int	map_error(char *map, t_vars *vars)
 {
 	int i;
 
 	i = 0;
 	while (map[i] != '\0')
 	{
-		if (map[i] != '0' || map[i] != '1' || map[i] != 'P')
+		//ft_printf("%c\n", map[i]);
+		if ((map[i] != '0') && (map[i] != '1') && (map[i] != 'P') && (map[i] != 'C') && (map[i] != '\n') && (map[i] != 'E'))
 			return (TRUE);
+		if (map[i] == 'C')
+			vars->total_collectable++;
 		i++;
 	}
 	return (FALSE);

@@ -22,16 +22,20 @@ int main(int ac, char **av)
 	char 		*map;
 	t_vars		vars;
 
+	vars.total_collectable = 0;
+	vars.taken_collectable = 0;
 	vars.map = clone_map(av[1]);
+
     if (ac != 2)
     	return (ft_putstr_fd("Error! Wrong number of arguments!\n", 2));
-    if (map_error(av[1]) != 1)
+    if (map_error(vars.map, &vars) == TRUE)
     	return (ft_putstr_fd("Error! Unrecognized symbol in map!\n", 2));
 	
     vars.mlx = mlx_init();
 	vars.win = mlx_new_window(vars.mlx, 640, 480, "So_Long");
+	vars.counter = 0;
 
-	render_map(&vars, vars.map, "./img/grass.xpm", "./img/wall.xpm");
+	render_map(&vars, vars.map, "./img/grass.xpm", "./img/wall.xpm", "./img/coin.xpm",  "./img/exit.xpm");
 
 	render_player(&vars, vars.map, "./img/chara.xpm");
 

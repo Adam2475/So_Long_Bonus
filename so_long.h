@@ -32,13 +32,17 @@ typedef struct s_vars
 	int		pos_x;
 	int		pos_y;
 	void	*player_image;
+	int		counter;
+	int		total_collectable;
+	int		taken_collectable;
 }	t_vars;
 
 int 	key_hook(int keycode, t_vars *vars);
-int		map_error(char *map);
+int		map_error(char *map, t_vars *vars);
 char 	*clone_map(char *map);
-void	render_map(t_vars *vars, char *map, char *relative_path, char *wall_path);
+void	render_map(t_vars *vars, char *map, char *relative_path, char *wall_path, char *coin_ptr, char *exit_ptr);
 void	*render_player(t_vars *vars, char *map, char *path);
 void	check_movement(int keycode, t_vars *vars);
+static bool take_coin(t_vars *vars, char *map, int tmp);
 
 #endif
