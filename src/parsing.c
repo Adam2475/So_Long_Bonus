@@ -85,46 +85,32 @@ bool	check_borders(char *map, t_vars vars)
 	return (false);
 }
 
-bool flood_fill(char *map, t_vars vars)
+bool flood_fill(char *map, t_vars vars, int position)
 {
-    int i;
-    int position;
-    int x = 0;
-    i = 0;
-    while (map[i] != 'P' && map[i] != '\0')
-        i++;
-    position = i;
-    while (x < 4)
-    {
-        if (map[i - 1] == 'E' || map[i + 1] == 'E' || map[i + vars.map_width] == 'E' || map[i - vars.map_width] == 'E')
-          return (false);
-        else if (map[i + 1] == '0' || map[i + 1] == 'E' || map[i + 1] == 'C')
-        {
-            map[i + 1] = 'F';
-            i++;
-        }
-        else if (map[i - 1] == '0' || map[i - 1] == 'E' || map[i - 1] == 'C')
-        {
-            map[i - 1] = 'F';
-            i--;
-        }
-        else if (map[i + vars.map_width] == '0' || map[i + vars.map_width] == 'E' || map[i + vars.map_width] == 'C')
-        {
-            map[i + vars.map_width] = 'F';
-            i = i + vars.map_width;
-        }
-        else if (map[i - vars.map_width] == '0' || map[i - vars.map_width] == 'E' || map[i - vars.map_width] == 'C')
-        {
-            map[i - vars.map_width] = 'F';
-            i = i - vars.map_width;
-        }
-        else 
-		{
-            i = position;
-			x++;
-		}
-    }
-    return (true);
+	if (map[vars.pos_i + 1] == '0'  || map[vars.pos_i + 1] == 'C')
+	{
+		map[vars.pos_i] = 'F';
+		vars.pos_i = vars.pos_i + 1;
+		flood_fill(map, vars, vars.pos_i + 1);
+	}
+	if (map[vars.pos_i - 1] == '0' || map[vars.pos_i - 1] == 'C')
+	{
+		map[vars.pos_i] = 'F';
+		vars.pos_i = vars.pos_i - vars.map_width;
+		flood_fill(map, vars, vars.pos_i - 1);
+	}
+	if (map[vars.pos_i - vars.map_width] == '0' || map[vars.pos_i - vars.map_width] == 'C')
+	{
+		map[vars.pos_i] = 'F';
+		vars.pos_i = vars.pos_i + 1;
+		flood_fill(map, vars, vars.pos_i - vars.map_width);
+	}
+	if (map[vars.pos_i + vars.map_width] == '0' || map[vars.pos_i + vars.map_width] == 'C')
+	{
+		map[vars.pos_i] = 'F';
+		vars.pos_i = vars.pos_i + vars.map_width;
+		flood_fill(map, vars, vars.pos_i + vars.map_width);
+	}
 }
 
 

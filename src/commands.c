@@ -16,7 +16,7 @@ int key_hook(int keycode, t_vars *vars)
 		check_movement(keycode, vars);
 		//ft_printf("%d\n", vars->total_collectable);
 	}
-	mlx_clear_window(vars->mlx, vars->win);
+	// mlx_clear_window(vars->mlx, vars->win);
 	render_map(vars, vars->map, "./img/grass.xpm", "./img/wall.xpm", "./img/coin.xpm", "./img/exit.xpm");
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->player_image, vars->pos_x * TILE_SIZE,  vars->pos_y * TILE_SIZE);
 	//render_re(vars, chara, vars->map, "./img/chara.xpm");

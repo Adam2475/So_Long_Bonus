@@ -6,7 +6,7 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:48:32 by adapassa          #+#    #+#             */
-/*   Updated: 2024/02/20 14:34:31 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/02/24 20:40:11 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,6 @@ static char *restock_map(char *map)
 		}
 		else
 			i++;
-	}
-	//ft_printf("%s\n", map);
-	//ft_printf("%s\n", tmp);
 	return (tmp);
 }
 
@@ -55,6 +52,9 @@ int main(int ac, char **av)
 	while (vars.map[x] != '\n')
 		x++;
 
+	while (vars.map[vars.pos_i] != 'P' && vars.map[vars.pos_i] != '\0')
+    	vars.pos_i++;
+
 	vars.map_width = x;
 
     if (ac != 2)
@@ -63,7 +63,7 @@ int main(int ac, char **av)
     	return (ft_putstr_fd("Error! Unrecognized symbol in map!\n", 2));
 	if (check_borders(vars.map_no_nl, vars) != false)
 		return (ft_putstr_fd("Error! Map not delimited by walls!\n", 2));
-	if (flood_fill(vars.map_no_nl, vars) != false)
+	if (flood_fill(vars.map_no_nl, vars, vars.pos_i) != false)
 		return (ft_putstr_fd("Error! No path to exit in selected map!\n", 2));
 	
     vars.mlx = mlx_init();

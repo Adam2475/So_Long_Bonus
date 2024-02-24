@@ -1,5 +1,5 @@
 CC = cc
-NAME = so_long.exe
+NAME = so_long
 FLAGS =  -g
 SRC = main.c src/commands.c src/parsing.c \
 		src/rendering.c \
