@@ -1,6 +1,14 @@
 #include "../so_long.h"
 #include "../mlx_linux/mlx.h"
 
+/*
+1111111111111
+1F01FFFFFFFF1
+1FFFF11111FF1
+1FFF11E000F01
+1111111111111
+*/
+
 int key_hook(int keycode, t_vars *vars)
 {
 	if (keycode == ESC_KEY)
@@ -126,6 +134,7 @@ void check_movement(int keycode, t_vars *vars)
 			vars->counter++;
 			ft_printf("%d\n", vars->counter);
 			vars->player_i = vars->player_i - 1;
+			//ft_printf("%c\n", vars->map[vars->player_i - 1]);
 		}
 	}
 	if (keycode == ARR_RIGHT)
@@ -136,6 +145,7 @@ void check_movement(int keycode, t_vars *vars)
 			vars->counter++;
 			ft_printf("%d\n", vars->counter);
 			vars->player_i = vars->player_i + 1;
+			//ft_printf("%c\n", vars->map[vars->player_i + 1]);
 		}
 	}
 	if (keycode == ARR_UP)
@@ -146,6 +156,7 @@ void check_movement(int keycode, t_vars *vars)
 			vars->counter++;
 			ft_printf("%d\n", vars->counter);
 			vars->player_i = vars->player_i - vars->map_width;
+			//ft_printf("%c\n", vars->map[vars->player_i - vars->map_width]);
 		}
 	}
 	if (keycode == ARR_DOWN)
@@ -156,6 +167,7 @@ void check_movement(int keycode, t_vars *vars)
 			vars->counter++;
 			ft_printf("%d\n", vars->counter);
 			vars->player_i = vars->player_i + vars->map_width;
+			//ft_printf("%c\n", vars->map[vars->player_i + vars->map_width]);
 		}
 	}
 }

@@ -27,7 +27,6 @@ int	map_error(char *map, t_vars *vars)
 	i = 0;
 	while (map[i] != '\0')
 	{
-		//ft_printf("%c\n", map[i]);
 		if ((map[i] != '0') && (map[i] != '1') && (map[i] != 'P') && (map[i] != 'C') && (map[i] != '\n') && (map[i] != 'E'))
 			return (TRUE);
 		if (map[i] == 'C')
@@ -43,6 +42,8 @@ bool	check_borders(char *map, t_vars vars)
 	int j = 0;
 	int y = 0;
 
+	//ft_printf("%s\n", map);
+
 	while (vars.map[y] != '\0')
 	{
 		if (vars.map[y] == '\n')
@@ -50,8 +51,6 @@ bool	check_borders(char *map, t_vars vars)
 		y++;
 	}
 
-	ft_printf("%d\n", y);
-	ft_printf("%d\n", ft_strlen(vars.map_no_nl));
 	vars.map_height = j;
 
 	while (map[i] != '\0')
@@ -87,33 +86,32 @@ bool	check_borders(char *map, t_vars vars)
 
 bool flood_fill(char *map, t_vars vars, int position, int *flag)
 {
-	if (map[vars.pos_i + 1] == 'E' || map[vars.pos_i - 1] == 'E' || map[vars.pos_i - vars.map_width] == 'E' || map[vars.pos_i + vars.map_width] == 'E')
-	{
+	if (map[position + 1] == 'E' || map[position - 1] == 'E'
+			|| map[position - vars.map_width] == 'E' || map[position + vars.map_width] == 'E')
 		*flag = 1;
-	}
-	if (map[vars.pos_i + 1] == '0'  || map[vars.pos_i + 1] == 'C')
+	if (map[position + 1] == '0'  || map[position + 1] == 'C')
 	{
-		map[vars.pos_i] = 'F';
-		vars.pos_i = vars.pos_i + 1;
-		flood_fill(map, vars, vars.pos_i + 1, flag);
+		map[position] = 'F';
+		//ft_printf("right %d\n", i);
+		flood_fill(map, vars, position + 1, flag);
 	}
-	if (map[vars.pos_i - 1] == '0' || map[vars.pos_i - 1] == 'C')
+	if (map[position + vars.map_width] == '0' || map[position + vars.map_width] == 'C')
 	{
-		map[vars.pos_i] = 'F';
-		vars.pos_i = vars.pos_i - 1;
-		flood_fill(map, vars, vars.pos_i - 1, flag);
+		map[position] = 'F';
+		//ft_printf("down %d\n", i);
+		flood_fill(map, vars, position + vars.map_width, flag);
 	}
-	if (map[vars.pos_i - vars.map_width] == '0' || map[vars.pos_i - vars.map_width] == 'C')
+	if (map[position - 1] == '0' || map[position - 1] == 'C')
 	{
-		map[vars.pos_i] = 'F';
-		vars.pos_i = vars.pos_i - vars.map_width;
-		flood_fill(map, vars, vars.pos_i - vars.map_width, flag);
+		map[position] = 'F';
+		//ft_printf("left %d\n", i);
+		flood_fill(map, vars, position - 1, flag);
 	}
-	if (map[vars.pos_i + vars.map_width] == '0' || map[vars.pos_i + vars.map_width] == 'C')
+	if (map[position - vars.map_width] == '0' || map[position - vars.map_width] == 'C')
 	{
-		map[vars.pos_i] = 'F';
-		vars.pos_i = vars.pos_i + vars.map_width;
-		flood_fill(map, vars, vars.pos_i + vars.map_width, flag);
+		map[position] = 'F';
+		//ft_printf("up %d\n", i);
+		flood_fill(map, vars, position - vars.map_width, flag);
 	}
 }
 
