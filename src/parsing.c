@@ -85,31 +85,35 @@ bool	check_borders(char *map, t_vars vars)
 	return (false);
 }
 
-bool flood_fill(char *map, t_vars vars, int position)
+bool flood_fill(char *map, t_vars vars, int position, int *flag)
 {
+	if (map[vars.pos_i + 1] == 'E' || map[vars.pos_i - 1] == 'E' || map[vars.pos_i - vars.map_width] == 'E' || map[vars.pos_i + vars.map_width] == 'E')
+	{
+		*flag = 1;
+	}
 	if (map[vars.pos_i + 1] == '0'  || map[vars.pos_i + 1] == 'C')
 	{
 		map[vars.pos_i] = 'F';
 		vars.pos_i = vars.pos_i + 1;
-		flood_fill(map, vars, vars.pos_i + 1);
+		flood_fill(map, vars, vars.pos_i + 1, flag);
 	}
 	if (map[vars.pos_i - 1] == '0' || map[vars.pos_i - 1] == 'C')
 	{
 		map[vars.pos_i] = 'F';
-		vars.pos_i = vars.pos_i - vars.map_width;
-		flood_fill(map, vars, vars.pos_i - 1);
+		vars.pos_i = vars.pos_i - 1;
+		flood_fill(map, vars, vars.pos_i - 1, flag);
 	}
 	if (map[vars.pos_i - vars.map_width] == '0' || map[vars.pos_i - vars.map_width] == 'C')
 	{
 		map[vars.pos_i] = 'F';
-		vars.pos_i = vars.pos_i + 1;
-		flood_fill(map, vars, vars.pos_i - vars.map_width);
+		vars.pos_i = vars.pos_i - vars.map_width;
+		flood_fill(map, vars, vars.pos_i - vars.map_width, flag);
 	}
 	if (map[vars.pos_i + vars.map_width] == '0' || map[vars.pos_i + vars.map_width] == 'C')
 	{
 		map[vars.pos_i] = 'F';
 		vars.pos_i = vars.pos_i + vars.map_width;
-		flood_fill(map, vars, vars.pos_i + vars.map_width);
+		flood_fill(map, vars, vars.pos_i + vars.map_width, flag);
 	}
 }
 
