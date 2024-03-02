@@ -46,6 +46,7 @@ void	render_map(t_vars *vars, char *map, char *relative_path, char *wall_path, c
 void	*render_player(t_vars *vars, char *map, char *path);
 void	check_movement(int keycode, t_vars *vars);
 void	flood_fill(char *map, t_vars vars, int position, int *flag);
-bool	check_borders(char *map, t_vars vars);
+bool	check_borders(t_vars vars);
+char	*restock_map(char *map);
 
 #endif

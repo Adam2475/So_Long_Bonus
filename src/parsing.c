@@ -36,13 +36,12 @@ int	map_error(char *map, t_vars *vars)
 	return (FALSE);
 }
 
-bool	check_borders(char *map, t_vars vars)
+bool	check_borders(t_vars vars)
 {
 	int i = 0;
 	int j = 0;
 	int y = 0;
-
-	//ft_printf("%s\n", map);
+	//char *tmp;
 
 	while (vars.map[y] != '\0')
 	{
@@ -51,31 +50,32 @@ bool	check_borders(char *map, t_vars vars)
 		y++;
 	}
 
+	//tmp = restock_map(vars.map);
 	vars.map_height = j;
 
-	while (map[i] != '\0')
+	while (vars.map_no_nl[i] && vars.map_no_nl[i] != '\0')
 	{
 		while (i < vars.map_width)
 		{
-			if (map[i] != '1')
+			if (vars.map_no_nl[i] != '1')
 				return (true);
 			i++;
 		}
 		if (i % vars.map_width == 0)
 		{
-			if (map[i] != '1')
+			if (vars.map_no_nl[i] != '1')
 				return (true);
-			if (map[i - 1] != '1')
+			if (vars.map_no_nl[i - 1] != '1')
 				return (true);
-			if (map[i + (vars.map_width - 1)] != '1')
+			if (vars.map_no_nl[i + (vars.map_width - 1)] != '1')
 				return (true);
 		}
 		i++;
 		if (i >= ((y - j - vars.map_width)))
 		{
-			while (map[i] != '\0')
+			while (vars.map_no_nl[i] != '\0')
 			{
-				if (map[i] != '1')
+				if (vars.map_no_nl[i] != '1')
 					return (true);
 				i++;
 			}
