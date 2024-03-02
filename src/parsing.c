@@ -84,7 +84,7 @@ bool	check_borders(char *map, t_vars vars)
 	return (false);
 }
 
-bool flood_fill(char *map, t_vars vars, int position, int *flag)
+void flood_fill(char *map, t_vars vars, int position, int *flag)
 {
 	if (map[position + 1] == 'E' || map[position - 1] == 'E'
 			|| map[position - vars.map_width] == 'E' || map[position + vars.map_width] == 'E')

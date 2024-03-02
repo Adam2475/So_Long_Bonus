@@ -74,9 +74,10 @@ void	*render_player(t_vars *vars, char *map, char *path)
 			z++;
 		i++;
 	}
-	vars->player_i = i - 1;
+	vars->player_i = vars->pos_i + 1;
 	vars->pos_y = z;
 	vars->pos_x = (i % x) - vars->pos_y;
 	vars->player_image = mlx_xpm_file_to_image(vars->mlx, path, &height, &width);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->player_image, vars->pos_x * TILE_SIZE,  vars->pos_y * TILE_SIZE);
+	return (NULL);
 }

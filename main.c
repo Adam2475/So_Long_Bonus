@@ -6,7 +6,7 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:48:32 by adapassa          #+#    #+#             */
-/*   Updated: 2024/03/01 21:15:43 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/03/02 19:00:21 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,15 @@ int main(int ac, char **av)
 	vars.win = mlx_new_window(vars.mlx, 640, 480, "So_Long");
 	vars.counter = 0;
 
+	//ft_printf("%d\n", vars.pos_i);
+
 	mlx_key_hook(vars.win, &key_hook, &vars);
 
 	render_map(&vars, vars.map, "./img/grass.xpm", "./img/wall.xpm", "./img/coin.xpm",  "./img/exit.xpm");
 
 	render_player(&vars, vars.map, "./img/chara.xpm");
+
+	//ft_printf("%d\n", vars.player_i);
 	
 	mlx_loop(vars.mlx);
     return (0);
