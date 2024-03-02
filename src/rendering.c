@@ -32,7 +32,9 @@ void	render_map(t_vars *vars, char *map, char *relative_path, char *wall_path, c
 	z = 0;
 	vars->map_width = i;
 	vars->map_height = j;
-	while (z <= j)
+	//ft_printf("%d\n", vars->map_width);
+	//ft_printf("%d\n", vars->map_height);
+	while (z < j)
 	{	
 		while (x <= i)
 		{
