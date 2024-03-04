@@ -48,5 +48,6 @@ void	check_movement(int keycode, t_vars *vars);
 void	flood_fill(char *map, t_vars vars, int position, int *flag);
 bool	check_borders(t_vars vars);
 char	*restock_map(char *map);
+void	free_exit(t_vars *vars);
 
 #endif

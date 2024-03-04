@@ -7,7 +7,7 @@ int key_hook(int keycode, t_vars *vars)
 	{
 		mlx_destroy_window(vars->mlx, vars->win);
 	 	ft_printf("Window Closed\n");
-		exit(0);
+		free_exit(vars);
 	}
 	if (keycode == ARR_LEFT || keycode == ARR_RIGHT
 		|| keycode == ARR_UP || keycode == ARR_DOWN)
@@ -16,7 +16,6 @@ int key_hook(int keycode, t_vars *vars)
 	}
 	render_map(vars, vars->map, "./img/grass.xpm", "./img/wall.xpm", "./img/coin.xpm", "./img/exit.xpm");
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->player_image, vars->pos_x * TILE_SIZE,  vars->pos_y * TILE_SIZE);
-
 	return (0);
 }
 
@@ -44,7 +43,7 @@ static bool	check_position(t_vars *vars, char *map, int position, int direction)
 			else if (map[position - vars->map_width + (vars->pos_y - 1)] == 'E' && vars->taken_collectable == vars->total_collectable)
 			{
 				ft_printf("yeeee you finished!");
-				exit(0);
+				free_exit(vars);
 			}
 			else if (map[position - vars->map_width + (vars->pos_y - 1)] == 'E')
 				return (true);
@@ -63,7 +62,7 @@ static bool	check_position(t_vars *vars, char *map, int position, int direction)
 			else if (map[position + vars->map_width + (vars->pos_y)] == 'E' && vars->taken_collectable == vars->total_collectable)
 			{
 				ft_printf("yeeee you finished!");
-				exit(0);
+				free_exit(vars);
 			}
 			if (map[position + vars->map_width + vars->pos_y] == 'E')
 				return (true);
@@ -82,7 +81,7 @@ static bool	check_position(t_vars *vars, char *map, int position, int direction)
 			else if (map[position - 1 + (vars->pos_y - 1)] == 'E' && vars->taken_collectable == vars->total_collectable)
 			{
 				ft_printf("yeeee you finished!");
-				exit(0);
+				free_exit(vars);
 			}
 			if (map[position + (vars->pos_y - 1) - 1] == 'E')
 				return (true);
@@ -101,7 +100,7 @@ static bool	check_position(t_vars *vars, char *map, int position, int direction)
 			else if (map[position + 1 + (vars->pos_y - 1)] == 'E' && vars->taken_collectable == vars->total_collectable)
 			{
 				ft_printf("yeeee you finished!");
-				exit(0);
+				free_exit(vars);
 			}
 			if (map[position + (vars->pos_y - 1) + 1] == 'E')
 				return (true);

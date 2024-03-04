@@ -6,7 +6,7 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:48:32 by adapassa          #+#    #+#             */
-/*   Updated: 2024/03/02 20:44:24 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/03/04 19:30:21 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,30 @@
 //sudo apt install libx11-dev 
 //libxext-dev
 
+void free_exit(t_vars *vars)
+{
+	free(vars->map);
+	free(vars->map_no_nl);
+	exit(0);
+}
+
 char *restock_map(char *map)
 {
 	int i = 0;
 	int x = 0;
 	char *tmp;
 	int j = 0;
+	int height = 0;
 
+	while (map[i] != '\0')
+	{
+		if (map[i] == '\n')
+			height++;
+		i++;
+	}
 	i = 0;
 
-	tmp = (char *)malloc(sizeof(char) * ft_strlen(map));
+	tmp = (char *)malloc(sizeof(char) * (ft_strlen(map) - height + 1));
 
 	while (map[i] != '\0')
 	{
@@ -39,6 +53,7 @@ char *restock_map(char *map)
 		else
 			i++;
 	}
+	i = i - height;
 	tmp[i] = '\0';
 	return (tmp);
 }
@@ -84,8 +99,8 @@ int main(int ac, char **av)
 	vars.map_width = x;
 	flood_fill(vars.map_no_nl, vars, vars.pos_i, &flag);
 
-    if (ac != 2)
-    	return (ft_putstr_fd("Error! Wrong number of arguments!\n", 2));
+    //if (ac != 2)
+    //	return (ft_putstr_fd("Error! Wrong number of arguments!\n", 2));
     if (map_error(vars.map, &vars) == TRUE)
     	return (ft_putstr_fd("Error! Unrecognized symbol in map!\n", 2));
 	if (check_borders(vars) != false)
@@ -100,6 +115,7 @@ int main(int ac, char **av)
 	render_map(&vars, vars.map, "./img/grass.xpm", "./img/wall.xpm", "./img/coin.xpm",  "./img/exit.xpm");
 	render_player(&vars, vars.map, "./img/chara.xpm");
 	mlx_loop(vars.mlx);
-	free(tmp);
+	//free(vars.map);
+	//free(vars.map_no_nl);
     return (0);
 }

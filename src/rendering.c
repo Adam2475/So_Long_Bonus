@@ -32,8 +32,6 @@ void	render_map(t_vars *vars, char *map, char *relative_path, char *wall_path, c
 	z = 0;
 	vars->map_width = i;
 	vars->map_height = j;
-	//ft_printf("%d\n", vars->map_width);
-	//ft_printf("%d\n", vars->map_height);
 	while (z < j)
 	{	
 		while (x <= i)
@@ -52,6 +50,10 @@ void	render_map(t_vars *vars, char *map, char *relative_path, char *wall_path, c
 		x = 0;
 		z++;		
 	}
+	free(img_ptr);
+	free(wall_ptr);
+	free(coin);
+	free(exit);
 	return ;
 }
 
@@ -81,5 +83,6 @@ void	*render_player(t_vars *vars, char *map, char *path)
 	vars->pos_x = (i % x) - vars->pos_y;
 	vars->player_image = mlx_xpm_file_to_image(vars->mlx, path, &height, &width);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->player_image, vars->pos_x * TILE_SIZE,  vars->pos_y * TILE_SIZE);
+	//free(vars->player_image);
 	return (NULL);
 }
