@@ -6,7 +6,7 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:48:32 by adapassa          #+#    #+#             */
-/*   Updated: 2024/03/04 19:30:21 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/03/05 19:45:18 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void free_exit(t_vars *vars)
 {
 	free(vars->map);
 	free(vars->map_no_nl);
+	//free(vars->player_image);
 	exit(0);
 }
 
