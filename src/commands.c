@@ -5,7 +5,6 @@ int key_hook(int keycode, t_vars *vars)
 {
 	if (keycode == ESC_KEY)
 	{
-		mlx_destroy_window(vars->mlx, vars->win);
 	 	ft_printf("Window Closed\n");
 		free_exit(vars);
 	}
@@ -14,7 +13,7 @@ int key_hook(int keycode, t_vars *vars)
 	{
 		check_movement(keycode, vars);
 	}
-	render_map(vars, vars->map, "./img/grass.xpm", "./img/wall.xpm", "./img/coin.xpm", "./img/exit.xpm");
+	render_map(vars, "./img/grass.xpm", "./img/wall.xpm", "./img/coin.xpm", "./img/exit.xpm");
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->player_image, vars->pos_x * TILE_SIZE,  vars->pos_y * TILE_SIZE);
 	return (0);
 }
@@ -114,7 +113,7 @@ void check_movement(int keycode, t_vars *vars)
 {
 	if (keycode == ARR_LEFT)
 	{
-		
+
 		if (check_position(vars, vars->map, vars->player_i, LEFT) == false)
 		{
 			vars->pos_x--;

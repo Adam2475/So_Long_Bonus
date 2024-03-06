@@ -1,7 +1,7 @@
 #include "../so_long.h"
 #include "../mlx_linux/mlx.h"
 
-void	render_map(t_vars *vars, char *map, char *relative_path, char *wall_path, char *coin_ptr, char *exit_ptr)
+void	render_map(t_vars *vars, char *relative_path, char *wall_path, char *coin_ptr, char *exit_ptr)
 {
 	int i;
 	int j;
@@ -21,9 +21,9 @@ void	render_map(t_vars *vars, char *map, char *relative_path, char *wall_path, c
 	wall_ptr = mlx_xpm_file_to_image(vars->mlx, wall_path, &img_width, &img_height);
 	coin = mlx_xpm_file_to_image(vars->mlx, coin_ptr, &img_width, &img_height);
 	exit = mlx_xpm_file_to_image(vars->mlx, exit_ptr, &img_width, &img_height);
-	while (map[i] != '\0')
+	while (vars->map[i] != '\0')
 	{
-		if (map[i] == '\n')
+		if (vars->map[i] == '\n')
 			j++;
 		i++;
 	}
@@ -33,22 +33,22 @@ void	render_map(t_vars *vars, char *map, char *relative_path, char *wall_path, c
 	vars->map_width = i;
 	vars->map_height = j;
 	while (z < j)
-	{	
+	{
 		while (x <= i)
 		{
-			if (map[p] == '0' || map[p] == 'P')
+			if (vars->map[p] == '0' || vars->map[p] == 'P')
 				mlx_put_image_to_window(vars->mlx, vars->win, img_ptr, x * 32, z * 32);
-			else if (map[p] == '1')
+			else if (vars->map[p] == '1')
 				mlx_put_image_to_window(vars->mlx, vars->win, wall_ptr, x * 32, z * 32);
-			else if (map[p] == 'C')
+			else if (vars->map[p] == 'C')
 				mlx_put_image_to_window(vars->mlx, vars->win, coin, x * 32, z * 32);
-			else if (map[p] == 'E')
+			else if (vars->map[p] == 'E')
 				mlx_put_image_to_window(vars->mlx, vars->win, exit, x * 32, z * 32);
 			x++;
 			p++;
 		}
 		x = 0;
-		z++;		
+		z++;
 	}
 	mlx_destroy_image(vars->mlx, img_ptr);
 	mlx_destroy_image(vars->mlx, wall_ptr);

@@ -14,14 +14,20 @@
 #include "mlx_linux/mlx.h"
 #include <time.h>
 
-//sudo apt install libx11-dev 
+//sudo apt install libx11-dev
 //libxext-dev
 
 void free_exit(t_vars *vars)
 {
 	free(vars->map);
 	free(vars->map_no_nl);
+
+	mlx_destroy_image(vars->mlx, vars->player_image);
 	//free(vars->player_image);
+	mlx_clear_window(vars->mlx, vars->win);
+	mlx_destroy_window(vars->mlx, vars->win);
+	mlx_destroy_display(vars->mlx);
+	free(vars->mlx);
 	exit(0);
 }
 
@@ -86,9 +92,9 @@ int main(int ac, char **av)
 	char		*tmp;
 
 	struct_init(&vars);
-	vars.map = clone_map(av[1]);
-	vars.map_no_nl = restock_map(vars.map);
-	tmp = restock_map(vars.map);
+	vars.map = clone_map(av[1]); // 126 bytes in 1 blocks
+	vars.map_no_nl = restock_map(vars.map); // 120 bytes in 1 block
+	tmp = restock_map(vars.map); // 120 bytes in 1 block
 
 	while (vars.map[x] != '\n')
 		x++;
@@ -108,13 +114,14 @@ int main(int ac, char **av)
 		return (ft_putstr_fd("Error! Map not delimited by walls!\n", 2));
 	if (flag <= 0)
 		return (ft_putstr_fd("Error! No path to exit in selected map!\n", 2));
-	
-    vars.mlx = mlx_init();
-	vars.win = mlx_new_window(vars.mlx, 640, 480, "So_Long");
+
+    vars.mlx = mlx_init(); // 27K bytes in 39 blocks
+	vars.win = mlx_new_window(vars.mlx, 640, 480, "So_Long"); // 6K bytes in 25 blocks
 	vars.counter = 0;
+	free(tmp);
 	mlx_key_hook(vars.win, &key_hook, &vars);
-	render_map(&vars, vars.map, "./img/grass.xpm", "./img/wall.xpm", "./img/coin.xpm",  "./img/exit.xpm");
-	render_player(&vars, vars.map, "./img/chara.xpm");
+	render_map(&vars, "./img/grass.xpm", "./img/wall.xpm", "./img/coin.xpm",  "./img/exit.xpm"); // 26K bytes in 129 blocks
+	render_player(&vars, vars.map, "./img/chara.xpm"); // 246 bytes in 3 blocks
 	mlx_loop(vars.mlx);
 	//free(vars.map);
 	//free(vars.map_no_nl);
