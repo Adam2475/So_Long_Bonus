@@ -13,7 +13,7 @@ int key_hook(int keycode, t_vars *vars)
 	{
 		check_movement(keycode, vars);
 	}
-	render_map(vars, "./img/grass.xpm", "./img/wall.xpm", "./img/coin.xpm", "./img/exit.xpm");
+	render_map(vars);
 	mlx_put_image_to_window(vars->mlx, vars->win, vars->player_image, vars->pos_x * TILE_SIZE,  vars->pos_y * TILE_SIZE);
 	return (0);
 }
@@ -112,44 +112,31 @@ static bool	check_position(t_vars *vars, char *map, int position, int direction)
 void check_movement(int keycode, t_vars *vars)
 {
 	if (keycode == ARR_LEFT)
-	{
-
 		if (check_position(vars, vars->map, vars->player_i, LEFT) == false)
 		{
 			vars->pos_x--;
-			vars->counter++;
-			ft_printf("%d\n", vars->counter);
+			ft_printf("%d\n", vars->counter++);
 			vars->player_i = vars->player_i - 1;
 		}
-	}
 	if (keycode == ARR_RIGHT)
-	{
 		if (check_position(vars, vars->map, vars->player_i, RIGHT) == false)
 		{
 			vars->pos_x++;
-			vars->counter++;
-			ft_printf("%d\n", vars->counter);
+			ft_printf("%d\n", vars->counter++);
 			vars->player_i = vars->player_i + 1;
 		}
-	}
 	if (keycode == ARR_UP)
-	{
 		if (check_position(vars, vars->map, vars->player_i - 1, UP) == false)
 		{
 			vars->pos_y--;
-			vars->counter++;
-			ft_printf("%d\n", vars->counter);
+			ft_printf("%d\n", vars->counter++);
 			vars->player_i = vars->player_i - vars->map_width;
 		}
-	}
 	if (keycode == ARR_DOWN)
-	{
 		if (check_position(vars, vars->map, vars->player_i, DOWN) == false)
 		{
 			vars->pos_y++;
-			vars->counter++;
-			ft_printf("%d\n", vars->counter);
+			ft_printf("%d\n", vars->counter++);
 			vars->player_i = vars->player_i + vars->map_width;
 		}
-	}
 }

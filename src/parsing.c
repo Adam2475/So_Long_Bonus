@@ -34,7 +34,7 @@ char *clone_map(char *map)
 	int		fd;
 
 	holder = NULL;
-	fd = open("./map.ber", O_RDONLY);
+	fd = open(map, O_RDONLY);
 	while (1)
 	{
 		tmp = get_next_line(fd);
@@ -68,7 +68,6 @@ bool	check_borders(t_vars vars)
 	int i = 0;
 	int j = 0;
 	int y = 0;
-	//char *tmp;
 
 	while (vars.map[y] != '\0')
 	{
@@ -79,9 +78,7 @@ bool	check_borders(t_vars vars)
 
 	if (!vars.map_no_nl)
 		return (true);
-	//tmp = restock_map(vars.map);
 	vars.map_height = j;
-
 	while (vars.map_no_nl[i] && vars.map_no_nl[i] != '\0')
 	{
 		while (i < vars.map_width)
@@ -104,8 +101,6 @@ bool	check_borders(t_vars vars)
 		{
 			while (vars.map_no_nl[i] && vars.map_no_nl[i + 1] != '\0')
 			{
-				//if (!vars.map_no_nl[i] || i >= ft_strlen(vars.map_no_nl))
-				//	break ;
 				if (vars.map_no_nl[i] != '1')
 					return (true);
 				i++;
