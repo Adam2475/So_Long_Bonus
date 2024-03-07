@@ -6,7 +6,7 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:34:18 by adapassa          #+#    #+#             */
-/*   Updated: 2024/03/07 16:34:44 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/03/07 16:40:26 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ char	*restock_map(char *map)
 		i++;
 	}
 	i = 0;
-	
 	tmp = helper3(map, height);
 	i = i - height;
 	tmp[i] = '\0';

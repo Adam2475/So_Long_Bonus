@@ -6,25 +6,26 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:20:35 by adapassa          #+#    #+#             */
-/*   Updated: 2024/03/07 15:39:12 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/03/07 16:42:58 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-static bool check_left(t_vars *vars, char *map, int position, int direction)
+static bool	check_left(t_vars *vars, char *map, int position, int direction)
 {
-    int tmp;
+	int	tmp;
 
-    tmp = 0;
-    if (map[position + (vars->pos_y - 1) - 1] != '1')
+	tmp = 0;
+	if (map[position + (vars->pos_y - 1) - 1] != '1')
 	{
 		if (map[position + (vars->pos_y - 1) - 1] == 'C')
 		{
 			tmp = position + (vars->pos_y - 1) - 1;
 			take_coin(vars, map, tmp);
 		}
-		else if (map[position - 1 + (vars->pos_y - 1)] == 'E' && vars->taken_collectable == vars->total_collectable)
+		else if (map[position - 1 + (vars->pos_y - 1)] == 'E'
+				&& vars->taken_collectable == vars->total_collectable)
 		{
 			ft_printf("yeeee you finished!");
 			free_exit(vars);
@@ -47,7 +48,8 @@ static bool check_right(t_vars *vars, char *map, int position, int direction)
 			tmp = position + (vars->pos_y - 1) + 1;
 			take_coin(vars, map, tmp);
 		}
-		else if (map[position + 1 + (vars->pos_y - 1)] == 'E' && vars->taken_collectable == vars->total_collectable)
+		else if (map[position + 1 + (vars->pos_y - 1)] == 'E'
+				&& vars->taken_collectable == vars->total_collectable)
 		{
 			ft_printf("yeeee you finished!");
 			free_exit(vars);
@@ -70,7 +72,8 @@ static bool check_up(t_vars *vars, char *map, int position, int direction)
 			tmp = position - vars->map_width + (vars->pos_y - 1);
 			take_coin(vars, map, tmp);
 		}
-		else if (map[position - vars->map_width + (vars->pos_y - 1)] == 'E' && vars->taken_collectable == vars->total_collectable)
+		else if (map[position - vars->map_width + (vars->pos_y - 1)] == 'E'
+				&& vars->taken_collectable == vars->total_collectable)
 		{
 			ft_printf("yeeee you finished!");
 			free_exit(vars);
@@ -93,7 +96,8 @@ static bool check_down(t_vars *vars, char *map, int position, int direction)
 			tmp = position + vars->map_width + vars->pos_y;
 			take_coin(vars, map, tmp);
 		}
-		else if (map[position + vars->map_width + (vars->pos_y)] == 'E' && vars->taken_collectable == vars->total_collectable)
+		else if (map[position + vars->map_width + (vars->pos_y)] == 'E'
+				&& vars->taken_collectable == vars->total_collectable)
 		{
 			ft_printf("yeeee you finished!");
 			free_exit(vars);

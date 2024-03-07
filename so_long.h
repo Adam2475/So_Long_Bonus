@@ -6,7 +6,7 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:36:25 by adapassa          #+#    #+#             */
-/*   Updated: 2024/03/07 16:34:36 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/03/07 16:45:08 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,12 @@
 # define ARR_UP 65362
 # define ARR_DOWN 65364
 
-enum Direction {
-    UP,
-    DOWN,
-    LEFT,
-    RIGHT
+enum e_direction
+{
+	UP,
+	DOWN,
+	LEFT,
+	RIGHT
 };
 
 typedef struct s_vars
@@ -58,9 +59,9 @@ typedef struct s_vars
 	void	*exit;
 }	t_vars;
 
-int 	key_hook(int keycode, t_vars *vars);
+int		key_hook(int keycode, t_vars *vars);
 int		map_error(char *map, t_vars *vars);
-char 	*clone_map(char *map);
+char	*clone_map(char *map);
 void	render_map(t_vars *vars);
 void	*render_player(t_vars *vars, char *map, char *path);
 void	check_movement(int keycode, t_vars *vars);

@@ -6,7 +6,7 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:48:32 by adapassa          #+#    #+#             */
-/*   Updated: 2024/03/07 16:34:02 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/03/07 16:37:32 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ void	free_exit(t_vars *vars)
 
 char	*helper3(char *map, int height)
 {
-	int	x;
-	int i;
-	char *tmp;
-	
+	int		x;
+	int		i;
+	char	*tmp;
+
 	tmp = (char *)malloc(sizeof(char) * (ft_strlen(map) - height + 1));
 	x = 0;
 	i = 0;
