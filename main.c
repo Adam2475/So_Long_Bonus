@@ -6,18 +6,16 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:48:32 by adapassa          #+#    #+#             */
-/*   Updated: 2024/03/05 19:45:18 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/03/07 16:34:02 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-#include "mlx_linux/mlx.h"
-#include <time.h>
 
 //sudo apt install libx11-dev
 //libxext-dev
 
-void free_exit(t_vars *vars)
+void	free_exit(t_vars *vars)
 {
 	free(vars->map);
 	free(vars->map_no_nl);
@@ -33,22 +31,15 @@ void free_exit(t_vars *vars)
 	exit(0);
 }
 
-char *restock_map(char *map)
+char	*helper3(char *map, int height)
 {
-	int i = 0;
-	int x = 0;
+	int	x;
+	int i;
 	char *tmp;
-	int j = 0;
-	int height = 0;
-
-	while (map[i] != '\0')
-	{
-		if (map[i] == '\n')
-			height++;
-		i++;
-	}
-	i = 0;
+	
 	tmp = (char *)malloc(sizeof(char) * (ft_strlen(map) - height + 1));
+	x = 0;
+	i = 0;
 	while (map[i] != '\0')
 	{
 		if (map[i] != '\n')
@@ -60,12 +51,10 @@ char *restock_map(char *map)
 		else
 			i++;
 	}
-	i = i - height;
-	tmp[i] = '\0';
 	return (tmp);
 }
 
-static void struct_init(t_vars *vars, char *av)
+static void	struct_init(t_vars *vars, char *av)
 {
 	vars->mlx = mlx_init();
 	vars->win = mlx_new_window(vars->mlx, 640, 480, "So_Long");
@@ -83,30 +72,42 @@ static void struct_init(t_vars *vars, char *av)
 	vars->pos_i = 0;
 	vars->img_height = 32;
 	vars->img_width = 32;
-	vars->img_ptr = mlx_xpm_file_to_image(vars->mlx, "./img/grass.xpm", &vars->img_width, &vars->img_height);
-	vars->wall_ptr = mlx_xpm_file_to_image(vars->mlx, "./img/wall.xpm", &vars->img_width, &vars->img_height);
-	vars->coin = mlx_xpm_file_to_image(vars->mlx, "./img/coin.xpm", &vars->img_width, &vars->img_height);
-	vars->exit = mlx_xpm_file_to_image(vars->mlx, "./img/exit.xpm", &vars->img_width, &vars->img_height);
+	vars->img_ptr = mlx_xpm_file_to_image(vars->mlx, "./img/grass.xpm",
+			&vars->img_width, &vars->img_height);
+	vars->wall_ptr = mlx_xpm_file_to_image(vars->mlx, "./img/wall.xpm",
+			&vars->img_width, &vars->img_height);
+	vars->coin = mlx_xpm_file_to_image(vars->mlx, "./img/coin.xpm",
+			&vars->img_width, &vars->img_height);
+	vars->exit = mlx_xpm_file_to_image(vars->mlx, "./img/exit.xpm",
+			&vars->img_width, &vars->img_height);
 }
 
-int main(int ac, char **av)
+static void	helper2(t_vars *vars)
+{
+	int	i;
+	int	x;
+
+	i = 0;
+	x = 0;
+	while (vars->map[x] != '\n')
+		x++;
+	while (vars->map_no_nl[i] != 'P')
+		i++;
+	vars->pos_i = i;
+	vars->map_width = x;
+	i = 0;
+}
+
+int	main(int ac, char **av)
 {
 	t_vars		vars;
-	int			i = 0;
-	int			x = 0;
-	int			flag = 0;
+	int			flag;
 	char		*tmp;
 
+	flag = 0;
 	struct_init(&vars, av[1]);
 	tmp = restock_map(vars.map);
-	while (vars.map[x] != '\n')
-		x++;
-	while (vars.map_no_nl[i] != 'P')
-		i++;
-	vars.pos_i = i;
-	i = 0;
-	vars.map_width = 0;
-	vars.map_width = x;
+	helper2(&vars);
 	flood_fill(vars.map_no_nl, vars, vars.pos_i, &flag);
 	if (ac != 2)
 		return (ft_putstr_fd("Error! Wrong number of arguments!\n", 2));

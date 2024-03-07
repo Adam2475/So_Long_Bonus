@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/07 14:10:13 by adapassa          #+#    #+#             */
+/*   Updated: 2024/03/07 15:34:58 by adapassa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../so_long.h"
 
 static char	*ft_strjoin_gnl2(char *s1, char const *s2)
@@ -8,7 +20,8 @@ static char	*ft_strjoin_gnl2(char *s1, char const *s2)
 
 	i = 0;
 	j = -1;
-	s3 = (char *)ft_custom_function(sizeof(char), ((long)ft_custom_function(0, 0, (char *)s1, 0)
+	s3 = (char *)ft_custom_function(sizeof(char),
+			((long)ft_custom_function(0, 0, (char *)s1, 0)
 				+ (long)ft_custom_function(0, 0, (char *)s2, 0) + 1), NULL, 1);
 	if (!s3)
 		return (0);
@@ -27,7 +40,7 @@ static char	*ft_strjoin_gnl2(char *s1, char const *s2)
 	return (s3);
 }
 
-char *clone_map(char *map)
+char	*clone_map(char *map)
 {
 	char	*tmp;
 	char	*holder;
@@ -49,12 +62,13 @@ char *clone_map(char *map)
 
 int	map_error(char *map, t_vars *vars)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (map[i] != '\0')
 	{
-		if ((map[i] != '0') && (map[i] != '1') && (map[i] != 'P') && (map[i] != 'C') && (map[i] != '\n') && (map[i] != 'E'))
+		if ((map[i] != '0') && (map[i] != '1') && (map[i] != 'P')
+			&& (map[i] != 'C') && (map[i] != '\n') && (map[i] != 'E'))
 			return (TRUE);
 		if (map[i] == 'C')
 			vars->total_collectable++;
@@ -63,80 +77,31 @@ int	map_error(char *map, t_vars *vars)
 	return (FALSE);
 }
 
-bool	check_borders(t_vars vars)
+bool	helper1(t_vars vars, int i, int j, int y)
 {
-	int i = 0;
-	int j = 0;
-	int y = 0;
-
-	while (vars.map[y] != '\0')
+	while (i < vars.map_width)
 	{
-		if (vars.map[y] == '\n')
-			j++;
-		y++;
+		if (vars.map_no_nl[i++] != '1')
+			return (true);
 	}
-
-	if (!vars.map_no_nl)
-		return (true);
-	vars.map_height = j;
-	while (vars.map_no_nl[i] && vars.map_no_nl[i] != '\0')
+	if (i % vars.map_width == 0)
 	{
-		while (i < vars.map_width)
+		if (vars.map_no_nl[i] != '1')
+			return (true);
+		if (vars.map_no_nl[i - 1] != '1')
+			return (true);
+		if (vars.map_no_nl[i + (vars.map_width - 1)] != '1')
+			return (true);
+	}
+	i++;
+	if (i >= ((y - j - vars.map_width)))
+	{
+		while (vars.map_no_nl[i] && vars.map_no_nl[i + 1] != '\0')
 		{
 			if (vars.map_no_nl[i] != '1')
 				return (true);
 			i++;
 		}
-		if (i % vars.map_width == 0)
-		{
-			if (vars.map_no_nl[i] != '1')
-				return (true);
-			if (vars.map_no_nl[i - 1] != '1')
-				return (true);
-			if (vars.map_no_nl[i + (vars.map_width - 1)] != '1')
-				return (true);
-		}
-		i++;
-		if (i >= ((y - j - vars.map_width)))
-		{
-			while (vars.map_no_nl[i] && vars.map_no_nl[i + 1] != '\0')
-			{
-				if (vars.map_no_nl[i] != '1')
-					return (true);
-				i++;
-			}
-			return (false);
-		}
-	}
-	return (false);
-}
-
-void flood_fill(char *map, t_vars vars, int position, int *flag)
-{
-	if (map[position + 1] == 'E' || map[position - 1] == 'E'
-			|| map[position - vars.map_width] == 'E' || map[position + vars.map_width] == 'E')
-		*flag = 1;
-	if (map[position + 1] == '0'  || map[position + 1] == 'C')
-	{
-		map[position] = 'F';
-		flood_fill(map, vars, position + 1, flag);
-	}
-	if (map[position + vars.map_width] == '0' || map[position + vars.map_width] == 'C')
-	{
-		map[position] = 'F';
-		flood_fill(map, vars, position + vars.map_width, flag);
-	}
-	if (map[position - 1] == '0' || map[position - 1] == 'C')
-	{
-		map[position] = 'F';
-		flood_fill(map, vars, position - 1, flag);
-	}
-	if (map[position - vars.map_width] == '0' || map[position - vars.map_width] == 'C')
-	{
-		map[position] = 'F';
-		flood_fill(map, vars, position - vars.map_width, flag);
+		return (false);
 	}
 }
-
-
-

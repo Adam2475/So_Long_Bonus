@@ -1,9 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/07 13:36:25 by adapassa          #+#    #+#             */
+/*   Updated: 2024/03/07 16:34:36 by adapassa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
 # include <unistd.h>
 # include <stdio.h>
 # include "libft/libft.h"
+# include "mlx_linux/mlx.h"
 
 # define TRUE 1
 # define FALSE 0
@@ -55,5 +68,9 @@ void	flood_fill(char *map, t_vars vars, int position, int *flag);
 bool	check_borders(t_vars vars);
 char	*restock_map(char *map);
 void	free_exit(t_vars *vars);
+bool	check_position(t_vars *vars, char *map, int position, int direction);
+bool	take_coin(t_vars *vars, char *map, int tmp);
+char	*helper3(char *map, int height);
+bool	helper1(t_vars vars, int i, int j, int y);
 
 #endif

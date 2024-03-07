@@ -2,7 +2,8 @@ CC = cc
 NAME = so_long
 FLAGS =  -g
 SRC = main.c src/commands.c src/parsing.c \
-		src/rendering.c \
+		src/rendering.c src/parse_utils.c \
+		src/move_handler.c \
 
 OBJ = $(SRC:.c=.o)
 LIB = mlx_linux/libmlx_Linux.a -lXext -lm
