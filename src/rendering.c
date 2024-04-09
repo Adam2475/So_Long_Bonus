@@ -6,7 +6,7 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:34:18 by adapassa          #+#    #+#             */
-/*   Updated: 2024/03/07 16:40:26 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/04/09 11:21:57 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ char	*restock_map(char *map)
 	i = 0;
 	j = 0;
 	height = 0;
+	if (!map)
+		return (NULL);
 	while (map[i] != '\0')
 	{
 		if (map[i] == '\n')

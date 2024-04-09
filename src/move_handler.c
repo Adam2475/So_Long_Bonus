@@ -6,13 +6,13 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:20:35 by adapassa          #+#    #+#             */
-/*   Updated: 2024/03/07 16:42:58 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/04/09 12:55:25 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-static bool	check_left(t_vars *vars, char *map, int position, int direction)
+static	bool	check_left(t_vars *vars, char *map, int position, int direction)
 {
 	int	tmp;
 
@@ -25,7 +25,7 @@ static bool	check_left(t_vars *vars, char *map, int position, int direction)
 			take_coin(vars, map, tmp);
 		}
 		else if (map[position - 1 + (vars->pos_y - 1)] == 'E'
-				&& vars->taken_collectable == vars->total_collectable)
+			&& vars->taken_collectable == vars->total_collectable)
 		{
 			ft_printf("yeeee you finished!");
 			free_exit(vars);
@@ -34,14 +34,16 @@ static bool	check_left(t_vars *vars, char *map, int position, int direction)
 			return (true);
 		return (false);
 	}
+	return (true);
 }
 
-static bool check_right(t_vars *vars, char *map, int position, int direction)
+static	bool	check_right(t_vars *vars, char *map,
+	int position, int direction)
 {
-    int tmp;
+	int	tmp;
 
-    tmp = 0;
-    if (map[position + (vars->pos_y - 1) + 1] != '1')
+	tmp = 0;
+	if (map[position + (vars->pos_y - 1) + 1] != '1')
 	{
 		if (map[position + (vars->pos_y - 1) + 1] == 'C')
 		{
@@ -49,7 +51,7 @@ static bool check_right(t_vars *vars, char *map, int position, int direction)
 			take_coin(vars, map, tmp);
 		}
 		else if (map[position + 1 + (vars->pos_y - 1)] == 'E'
-				&& vars->taken_collectable == vars->total_collectable)
+			&& vars->taken_collectable == vars->total_collectable)
 		{
 			ft_printf("yeeee you finished!");
 			free_exit(vars);
@@ -58,14 +60,15 @@ static bool check_right(t_vars *vars, char *map, int position, int direction)
 			return (true);
 		return (false);
 	}
+	return (true);
 }
 
-static bool check_up(t_vars *vars, char *map, int position, int direction)
+static	bool	check_up(t_vars *vars, char *map, int position, int direction)
 {
-    int tmp;
+	int	tmp;
 
-    tmp = 0;
-    if (map[position - vars->map_width + (vars->pos_y - 1)] != '1' )
+	tmp = 0;
+	if (map[position - vars->map_width + (vars->pos_y - 1)] != '1' )
 	{
 		if (map[position - vars->map_width + (vars->pos_y - 1)] == 'C')
 		{
@@ -73,7 +76,7 @@ static bool check_up(t_vars *vars, char *map, int position, int direction)
 			take_coin(vars, map, tmp);
 		}
 		else if (map[position - vars->map_width + (vars->pos_y - 1)] == 'E'
-				&& vars->taken_collectable == vars->total_collectable)
+			&& vars->taken_collectable == vars->total_collectable)
 		{
 			ft_printf("yeeee you finished!");
 			free_exit(vars);
@@ -82,14 +85,15 @@ static bool check_up(t_vars *vars, char *map, int position, int direction)
 			return (true);
 		return (false);
 	}
+	return (true);
 }
 
-static bool check_down(t_vars *vars, char *map, int position, int direction)
+static	bool	check_down(t_vars *vars, char *map, int position, int direction)
 {
-    int tmp;
+	int	tmp;
 
-    tmp = 0;
-    if (map[position + vars->map_width + vars->pos_y] != '1')
+	tmp = 0;
+	if (map[position + vars->map_width + vars->pos_y] != '1')
 	{
 		if (map[position + vars->map_width + vars->pos_y] == 'C')
 		{
@@ -97,7 +101,7 @@ static bool check_down(t_vars *vars, char *map, int position, int direction)
 			take_coin(vars, map, tmp);
 		}
 		else if (map[position + vars->map_width + (vars->pos_y)] == 'E'
-				&& vars->taken_collectable == vars->total_collectable)
+			&& vars->taken_collectable == vars->total_collectable)
 		{
 			ft_printf("yeeee you finished!");
 			free_exit(vars);
@@ -106,11 +110,11 @@ static bool check_down(t_vars *vars, char *map, int position, int direction)
 			return (true);
 		return (false);
 	}
+	return (true);
 }
 
 bool	check_position(t_vars *vars, char *map, int position, int direction)
 {
-	
 	if (direction == UP)
 	{
 		if (check_up(vars, map, position, direction) == false)

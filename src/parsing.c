@@ -6,7 +6,7 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:10:13 by adapassa          #+#    #+#             */
-/*   Updated: 2024/03/07 15:34:58 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/04/09 10:49:07 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int	map_error(char *map, t_vars *vars)
 	int	i;
 
 	i = 0;
+	if (!map)
+		return (TRUE);
 	while (map[i] != '\0')
 	{
 		if ((map[i] != '0') && (map[i] != '1') && (map[i] != 'P')
@@ -102,6 +104,6 @@ bool	helper1(t_vars vars, int i, int j, int y)
 				return (true);
 			i++;
 		}
-		return (false);
 	}
+	return (false);
 }

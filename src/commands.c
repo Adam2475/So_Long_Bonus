@@ -6,7 +6,7 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:06:05 by adapassa          #+#    #+#             */
-/*   Updated: 2024/03/07 16:46:25 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/04/09 12:56:50 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,42 +40,54 @@ bool	take_coin(t_vars *vars, char *map, int tmp)
 	return (false);
 }
 
+static	void	executor(int flag, t_vars *vars)
+{
+	if (flag == 0)
+	{
+		vars->pos_x--;
+		ft_printf("%d\n", vars->counter++);
+		vars->player_i = vars->player_i - 1;
+	}
+	else if (flag == 1)
+	{
+		vars->pos_x++;
+		ft_printf("%d\n", vars->counter++);
+		vars->player_i = vars->player_i + 1;
+	}
+	else if (flag == 2)
+	{
+		vars->pos_y--;
+		ft_printf("%d\n", vars->counter++);
+		vars->player_i = vars->player_i - vars->map_width;
+	}
+	else if (flag == 3)
+	{
+		vars->pos_y++;
+		ft_printf("%d\n", vars->counter++);
+		vars->player_i = vars->player_i + vars->map_width;
+	}
+}
+
 void	check_movement(int keycode, t_vars *vars)
 {
 	if (keycode == ARR_LEFT)
 	{
 		if (check_position(vars, vars->map, vars->player_i, LEFT) == false)
-		{
-			vars->pos_x--;
-			ft_printf("%d\n", vars->counter++);
-			vars->player_i = vars->player_i - 1;
-		}
+			executor(0, vars);
 	}
 	if (keycode == ARR_RIGHT)
 	{
 		if (check_position(vars, vars->map, vars->player_i, RIGHT) == false)
-		{
-			vars->pos_x++;
-			ft_printf("%d\n", vars->counter++);
-			vars->player_i = vars->player_i + 1;
-		}
+			executor(1, vars);
 	}
 	if (keycode == ARR_UP)
 	{
 		if (check_position(vars, vars->map, vars->player_i - 1, UP) == false)
-		{
-			vars->pos_y--;
-			ft_printf("%d\n", vars->counter++);
-			vars->player_i = vars->player_i - vars->map_width;
-		}
+			executor(2, vars);
 	}
 	if (keycode == ARR_DOWN)
 	{
 		if (check_position(vars, vars->map, vars->player_i, DOWN) == false)
-		{
-			vars->pos_y++;
-			ft_printf("%d\n", vars->counter++);
-			vars->player_i = vars->player_i + vars->map_width;
-		}
+			executor(3, vars);
 	}
 }

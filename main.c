@@ -6,14 +6,11 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:48:32 by adapassa          #+#    #+#             */
-/*   Updated: 2024/03/07 16:37:32 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/04/09 12:51:12 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
-//sudo apt install libx11-dev
-//libxext-dev
 
 void	free_exit(t_vars *vars)
 {
@@ -89,6 +86,8 @@ static void	helper2(t_vars *vars)
 
 	i = 0;
 	x = 0;
+	if (!vars->map)
+		return ;
 	while (vars->map[x] != '\n')
 		x++;
 	while (vars->map_no_nl[i] != 'P')
@@ -108,11 +107,12 @@ int	main(int ac, char **av)
 	struct_init(&vars, av[1]);
 	tmp = restock_map(vars.map);
 	helper2(&vars);
-	flood_fill(vars.map_no_nl, vars, vars.pos_i, &flag);
+	if (vars.map != NULL)
+		flood_fill(vars.map_no_nl, vars, vars.pos_i, &flag);
 	if (ac != 2)
 		return (ft_putstr_fd("Error! Wrong number of arguments!\n", 2));
 	if (map_error(vars.map, &vars) == TRUE)
-		return (ft_putstr_fd("Error! Unrecognized symbol in map!\n", 2));
+		return (ft_putstr_fd("Error! Unrecognized symbol in map\n", 2));
 	if (check_borders(vars) != false)
 		return (ft_putstr_fd("Error! Map not delimited by walls!\n", 2));
 	if (flag <= 0)
