@@ -6,16 +6,24 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:06:05 by adapassa          #+#    #+#             */
-/*   Updated: 2024/04/09 12:56:50 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/04/15 10:59:31 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 #include "../mlx_linux/mlx.h"
 
+int	exit_hook(t_vars *vars, int x_event,
+		int (*funct)(), void *param)
+{
+	ft_printf("Window Closed\n");
+	free_exit(vars);
+	return (0);
+}
+
 int	key_hook(int keycode, t_vars *vars)
 {
-	if (keycode == ESC_KEY)
+	if (keycode == ESC_KEY || keycode == 17)
 	{
 		ft_printf("Window Closed\n");
 		free_exit(vars);

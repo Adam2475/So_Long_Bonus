@@ -6,7 +6,7 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:36:25 by adapassa          #+#    #+#             */
-/*   Updated: 2024/03/07 16:45:08 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/04/15 11:00:25 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct s_vars
 	void	*wall_ptr;
 	void	*coin;
 	void	*exit;
+	int		map_total;
 }	t_vars;
 
 int		key_hook(int keycode, t_vars *vars);
@@ -73,5 +74,8 @@ bool	check_position(t_vars *vars, char *map, int position, int direction);
 bool	take_coin(t_vars *vars, char *map, int tmp);
 char	*helper3(char *map, int height);
 bool	helper1(t_vars vars, int i, int j, int y);
+void	calc_size(t_vars *vars);
+int		exit_hook(t_vars *vars, int x_event,
+			int (*funct)(), void *param);
 
 #endif

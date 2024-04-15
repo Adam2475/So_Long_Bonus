@@ -6,15 +6,32 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:34:18 by adapassa          #+#    #+#             */
-/*   Updated: 2024/04/09 11:21:57 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/04/15 10:12:19 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
+void	calc_size(t_vars *vars)
+{
+	int	i[2];
+
+	i[0] = 0;
+	i[1] = 1;
+	while (vars->map[i[0]] != '\0')
+	{
+		if (vars->map[i[0]] == '\n')
+			i[1]++;
+		i[0]++;
+	}
+	i[0] = i[0] / i[1];
+	vars->map_width = i[0];
+	vars->map_height = i[1];
+}
+
 static void	helper(t_vars *vars, int *i)
 {
-	while (i[3] <= i[0])
+	while (i[3] <= i[5])
 	{
 		if (vars->map[i[4]] == '0' || vars->map[i[4]] == 'P')
 			mlx_put_image_to_window(vars->mlx, vars->win,
@@ -35,21 +52,24 @@ static void	helper(t_vars *vars, int *i)
 
 void	render_map(t_vars *vars)
 {
-	int	i[5];
+	int	i[6];
 
 	i[0] = 0;
 	i[1] = 1;
 	i[4] = 0;
 	i[2] = 0;
 	i[3] = 0;
+	i[5] = 0;
 	while (vars->map[i[0]] != '\0')
 	{
 		if (vars->map[i[0]] == '\n')
 			i[1]++;
 		i[0]++;
 	}
-	i[0] = i[0] / i[1];
-	vars->map_width = i[0];
+	while (vars->map[i[5]] != '\n')
+		i[5]++;
+	vars->map_total = i[0];
+	vars->map_width = i[5];
 	vars->map_height = i[1];
 	while (i[2] < i[1])
 	{
@@ -107,6 +127,5 @@ char	*restock_map(char *map)
 	i = 0;
 	tmp = helper3(map, height);
 	i = i - height;
-	tmp[i] = '\0';
 	return (tmp);
 }

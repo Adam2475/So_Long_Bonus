@@ -6,7 +6,7 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:52:30 by adapassa          #+#    #+#             */
-/*   Updated: 2024/03/07 14:58:32 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/04/15 10:21:23 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,4 +67,20 @@ bool	check_borders(t_vars vars)
 			return (true);
 	}
 	return (false);
+}
+
+void	free_exit(t_vars *vars)
+{
+	free(vars->map);
+	free(vars->map_no_nl);
+	mlx_destroy_image(vars->mlx, vars->img_ptr);
+	mlx_destroy_image(vars->mlx, vars->wall_ptr);
+	mlx_destroy_image(vars->mlx, vars->coin);
+	mlx_destroy_image(vars->mlx, vars->exit);
+	mlx_destroy_image(vars->mlx, vars->player_image);
+	mlx_clear_window(vars->mlx, vars->win);
+	mlx_destroy_window(vars->mlx, vars->win);
+	mlx_destroy_display(vars->mlx);
+	free(vars->mlx);
+	exit(0);
 }

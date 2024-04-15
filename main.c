@@ -6,26 +6,36 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:48:32 by adapassa          #+#    #+#             */
-/*   Updated: 2024/04/09 12:51:12 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/04/15 11:10:21 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	free_exit(t_vars *vars)
+static	void	check_collectables(char *str, t_vars *vars, char *tmp)
 {
-	free(vars->map);
-	free(vars->map_no_nl);
-	mlx_destroy_image(vars->mlx, vars->img_ptr);
-	mlx_destroy_image(vars->mlx, vars->wall_ptr);
-	mlx_destroy_image(vars->mlx, vars->coin);
-	mlx_destroy_image(vars->mlx, vars->exit);
-	mlx_destroy_image(vars->mlx, vars->player_image);
-	mlx_clear_window(vars->mlx, vars->win);
-	mlx_destroy_window(vars->mlx, vars->win);
-	mlx_destroy_display(vars->mlx);
-	free(vars->mlx);
-	exit(0);
+	int	i;
+
+	i = 0;
+	free(tmp);
+	while (str[i] != '\0')
+	{
+		if (str[i] == 'C')
+		{
+			free(vars->map);
+			free(vars->map_no_nl);
+			mlx_destroy_image(vars->mlx, vars->img_ptr);
+			mlx_destroy_image(vars->mlx, vars->wall_ptr);
+			mlx_destroy_image(vars->mlx, vars->coin);
+			mlx_destroy_image(vars->mlx, vars->exit);
+			mlx_clear_window(vars->mlx, vars->win);
+			mlx_destroy_window(vars->mlx, vars->win);
+			mlx_destroy_display(vars->mlx);
+			free(vars->mlx);
+			exit(write(1, "collectable not reachable!\n", 26));
+		}
+		i++;
+	}
 }
 
 char	*helper3(char *map, int height)
@@ -34,7 +44,7 @@ char	*helper3(char *map, int height)
 	int		i;
 	char	*tmp;
 
-	tmp = (char *)malloc(sizeof(char) * (ft_strlen(map) - height + 1));
+	tmp = (char *)ft_calloc(sizeof(char), (ft_strlen(map) - height + 1));
 	x = 0;
 	i = 0;
 	while (map[i] != '\0')
@@ -51,13 +61,13 @@ char	*helper3(char *map, int height)
 	return (tmp);
 }
 
-static void	struct_init(t_vars *vars, char *av)
+static void	struct_init(t_vars *vars, char *av, char *tmp, int *flag)
 {
-	vars->mlx = mlx_init();
-	vars->win = mlx_new_window(vars->mlx, 640, 480, "So_Long");
 	vars->map = clone_map(av);
-	vars->map_width = 0;
-	vars->map_height = 0;
+	calc_size(vars);
+	vars->mlx = mlx_init();
+	vars->win = mlx_new_window(vars->mlx, vars->map_width * TILE_SIZE,
+			vars->map_height * TILE_SIZE, "So_Long");
 	vars->player_i = 0;
 	vars->pos_x = 0;
 	vars->pos_y = 0;
@@ -77,6 +87,7 @@ static void	struct_init(t_vars *vars, char *av)
 			&vars->img_width, &vars->img_height);
 	vars->exit = mlx_xpm_file_to_image(vars->mlx, "./img/exit.xpm",
 			&vars->img_width, &vars->img_height);
+	flag = 0;
 }
 
 static void	helper2(t_vars *vars)
@@ -103,12 +114,12 @@ int	main(int ac, char **av)
 	int			flag;
 	char		*tmp;
 
-	flag = 0;
-	struct_init(&vars, av[1]);
+	struct_init(&vars, av[1], tmp, &flag);
 	tmp = restock_map(vars.map);
 	helper2(&vars);
 	if (vars.map != NULL)
 		flood_fill(vars.map_no_nl, vars, vars.pos_i, &flag);
+	check_collectables(vars.map_no_nl, &vars, tmp);
 	if (ac != 2)
 		return (ft_putstr_fd("Error! Wrong number of arguments!\n", 2));
 	if (map_error(vars.map, &vars) == TRUE)
@@ -117,7 +128,7 @@ int	main(int ac, char **av)
 		return (ft_putstr_fd("Error! Map not delimited by walls!\n", 2));
 	if (flag <= 0)
 		return (ft_putstr_fd("Error! No path to exit in selected map!\n", 2));
-	free(tmp);
+	mlx_hook(vars.win, 17, 0, &exit_hook, &vars);
 	mlx_key_hook(vars.win, &key_hook, &vars);
 	render_map(&vars);
 	render_player(&vars, vars.map, "./img/chara.xpm");

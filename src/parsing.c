@@ -6,7 +6,7 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:10:13 by adapassa          #+#    #+#             */
-/*   Updated: 2024/04/09 10:49:07 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/04/15 10:03:08 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ char	*clone_map(char *map)
 
 	holder = NULL;
 	fd = open(map, O_RDONLY);
+	if (fd < 0)
+		exit(write(1, "error, map not found!\n", 22));
 	while (1)
 	{
 		tmp = get_next_line(fd);
