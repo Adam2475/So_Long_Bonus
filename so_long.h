@@ -6,7 +6,7 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 13:36:25 by adapassa          #+#    #+#             */
-/*   Updated: 2024/04/15 11:00:25 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/04/18 15:02:43 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,13 @@ void	render_map(t_vars *vars);
 void	*render_player(t_vars *vars, char *map, char *path);
 void	check_movement(int keycode, t_vars *vars);
 void	flood_fill(char *map, t_vars vars, int position, int *flag);
-bool	check_borders(t_vars vars);
+bool	check_borders(t_vars *vars, char *tmp);
 char	*restock_map(char *map);
 void	free_exit(t_vars *vars);
 bool	check_position(t_vars *vars, char *map, int position, int direction);
 bool	take_coin(t_vars *vars, char *map, int tmp);
 char	*helper3(char *map, int height);
-bool	helper1(t_vars vars, int i, int j, int y);
+bool	helper1(t_vars *vars, int i, int j);
 void	calc_size(t_vars *vars);
 int		exit_hook(t_vars *vars, int x_event,
 			int (*funct)(), void *param);

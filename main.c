@@ -6,7 +6,7 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:48:32 by adapassa          #+#    #+#             */
-/*   Updated: 2024/04/15 11:10:21 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/04/18 15:18:40 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,31 @@ static void	helper2(t_vars *vars)
 	i = 0;
 }
 
+static	void	check_shit(t_vars *vars, char *tmp)
+{
+	int	flag_e;
+	int	flag_p;
+	int	i;
+
+	i = 0;
+	flag_e = 0;
+	flag_p = 0;
+	while (vars->map_no_nl[i] != '\0')
+	{
+		if (vars->map_no_nl[i] == 'P')
+			flag_p++;
+		if (vars->map_no_nl[i] == 'E')
+			flag_e++;
+		i++;
+	}
+	if (flag_e > 1 || flag_p > 1)
+	{
+		free(tmp);
+		ft_putstr_fd("Duplicate player or exit!\n", 2);
+		free_exit(vars);
+	}
+}
+
 int	main(int ac, char **av)
 {
 	t_vars		vars;
@@ -117,15 +142,15 @@ int	main(int ac, char **av)
 	struct_init(&vars, av[1], tmp, &flag);
 	tmp = restock_map(vars.map);
 	helper2(&vars);
-	if (vars.map != NULL)
-		flood_fill(vars.map_no_nl, vars, vars.pos_i, &flag);
-	check_collectables(vars.map_no_nl, &vars, tmp);
+	check_borders(&vars, tmp);
+	check_shit(&vars, tmp);
 	if (ac != 2)
 		return (ft_putstr_fd("Error! Wrong number of arguments!\n", 2));
 	if (map_error(vars.map, &vars) == TRUE)
 		return (ft_putstr_fd("Error! Unrecognized symbol in map\n", 2));
-	if (check_borders(vars) != false)
-		return (ft_putstr_fd("Error! Map not delimited by walls!\n", 2));
+	if (vars.map != NULL)
+		flood_fill(vars.map_no_nl, vars, vars.pos_i, &flag);
+	check_collectables(vars.map_no_nl, &vars, tmp);
 	if (flag <= 0)
 		return (ft_putstr_fd("Error! No path to exit in selected map!\n", 2));
 	mlx_hook(vars.win, 17, 0, &exit_hook, &vars);

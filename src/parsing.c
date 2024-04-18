@@ -6,7 +6,7 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:10:13 by adapassa          #+#    #+#             */
-/*   Updated: 2024/04/15 10:03:08 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/04/18 14:51:20 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,31 +81,27 @@ int	map_error(char *map, t_vars *vars)
 	return (FALSE);
 }
 
-bool	helper1(t_vars vars, int i, int j, int y)
+bool	helper1(t_vars *vars, int i, int j)
 {
-	while (i < vars.map_width)
+	while (i < (j - vars->map_width))
 	{
-		if (vars.map_no_nl[i++] != '1')
-			return (true);
-	}
-	if (i % vars.map_width == 0)
-	{
-		if (vars.map_no_nl[i] != '1')
-			return (true);
-		if (vars.map_no_nl[i - 1] != '1')
-			return (true);
-		if (vars.map_no_nl[i + (vars.map_width - 1)] != '1')
-			return (true);
-	}
-	i++;
-	if (i >= ((y - j - vars.map_width)))
-	{
-		while (vars.map_no_nl[i] && vars.map_no_nl[i + 1] != '\0')
+		if (i % vars->map_width == 0)
 		{
-			if (vars.map_no_nl[i] != '1')
+			if (vars->map_no_nl[i] != '1')
 				return (true);
-			i++;
 		}
+		else if ((i + 1) % vars->map_width == 0)
+		{
+			if (vars->map_no_nl[i] != '1')
+				return (true);
+		}
+		i++;
+	}
+	while (i < j)
+	{
+		if (vars->map_no_nl[i] != '1')
+			return (true);
+		i++;
 	}
 	return (false);
 }

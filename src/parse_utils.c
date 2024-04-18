@@ -6,7 +6,7 @@
 /*   By: adapassa <adapassa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 14:52:30 by adapassa          #+#    #+#             */
-/*   Updated: 2024/04/15 10:21:23 by adapassa         ###   ########.fr       */
+/*   Updated: 2024/04/18 15:03:24 by adapassa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,30 +41,30 @@ void	flood_fill(char *map, t_vars vars, int pos, int *flag)
 	}
 }
 
-bool	check_borders(t_vars vars)
+bool	check_borders(t_vars *vars, char *tmp)
 {
 	int	i;
 	int	j;
-	int	y;
 
 	i = 0;
 	j = 0;
-	y = 0;
-	while (vars.map[y] != '\0')
+	while (vars->map_no_nl[j] != '\0')
+		j++;
+	while (i < vars->map_width)
 	{
-		if (vars.map[y] == '\n')
-			j++;
-		y++;
+		if (vars->map_no_nl[i] != '1')
+		{
+			ft_putstr_fd("error with map borders!\n", 2);
+			free(tmp);
+			free_exit(vars);
+		}
+		i++;
 	}
-	if (!vars.map_no_nl)
-		return (true);
-	vars.map_height = j;
-	while (vars.map_no_nl[i] && vars.map_no_nl[i] != '\0')
+	if (helper1(vars, i, j) != 0)
 	{
-		if (helper1(vars, i, j, y) == false)
-			return (false);
-		else
-			return (true);
+		ft_putstr_fd("error with map borders!\n", 2);
+		free(tmp);
+		free_exit(vars);
 	}
 	return (false);
 }
@@ -77,10 +77,12 @@ void	free_exit(t_vars *vars)
 	mlx_destroy_image(vars->mlx, vars->wall_ptr);
 	mlx_destroy_image(vars->mlx, vars->coin);
 	mlx_destroy_image(vars->mlx, vars->exit);
-	mlx_destroy_image(vars->mlx, vars->player_image);
+	if (vars->player_image != NULL)
+		mlx_destroy_image(vars->mlx, vars->player_image);
 	mlx_clear_window(vars->mlx, vars->win);
 	mlx_destroy_window(vars->mlx, vars->win);
 	mlx_destroy_display(vars->mlx);
 	free(vars->mlx);
 	exit(0);
 }
+
